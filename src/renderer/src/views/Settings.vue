@@ -1,210 +1,125 @@
 <template>
-  <div class="p-6 space-y-6">
-    <!-- Settings Header -->
-    <div class="bg-slate-800 border border-gray-700 rounded-xl p-6">
-      <h1 class="text-xl font-semibold text-white mb-2">Настройки</h1>
-      <p class="text-gray-400">Настройка среды разработки</p>
+  <div class="h-full flex flex-col bg-[#0d0f14]">
+    
+    <div class="px-6 py-4 border-b border-white/5 flex items-center justify-between shrink-0">
+      <div class="flex items-center space-x-3">
+        <CogIcon class="w-5 h-5 text-cyan-500" />
+        <h1 class="text-sm font-black uppercase tracking-widest text-white">Settings</h1>
+      </div>
+      <button class="px-4 py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white text-[10px] font-bold uppercase rounded-md transition-all shadow-lg shadow-cyan-900/20">
+        Save
+      </button>
     </div>
 
-    <!-- Settings Sections -->
-    <div class="grid grid-cols-2 gap-6">
-      <!-- General Settings -->
-      <div class="bg-slate-800 border border-gray-700 rounded-xl">
-        <div class="px-6 py-4 border-b border-gray-700">
-          <h2 class="text-lg font-semibold text-white flex items-center space-x-2">
-            <CogIcon class="w-5 h-5 text-gray-400" />
-            <span>Общие</span>
-          </h2>
-        </div>
-        <div class="p-6 space-y-6">
-          <div>
-            <label class="block text-sm font-medium text-gray-300 mb-2"
-              >Диапазон портов по умолчанию</label
-            >
-            <div class="flex space-x-3">
-              <input
-                type="number"
-                value="8000"
-                class="flex-1 px-3 py-2 text-sm bg-slate-600 border border-gray-600 text-white rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
-              />
-              <span class="flex items-center text-sm text-gray-400">до</span>
-              <input
-                type="number"
-                value="8100"
-                class="flex-1 px-3 py-2 text-sm bg-slate-600 border border-gray-600 text-white rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
-              />
-            </div>
-          </div>
-
-          <div>
-            <label class="block text-sm font-medium text-gray-300 mb-2">Автозапуск сервисов</label>
-            <div class="flex items-center space-x-3">
-              <input
-                type="checkbox"
-                class="w-4 h-4 text-cyan-600 bg-slate-600 border-gray-600 rounded focus:ring-cyan-500"
-                checked
-              />
-              <span class="text-sm text-gray-300"
-                >Запускать сервисы автоматически при запуске приложения</span
-              >
-            </div>
-          </div>
-
-          <div>
-            <label class="block text-sm font-medium text-gray-300 mb-2">Тема</label>
-            <select
-              class="w-full px-3 py-2 text-sm bg-slate-600 border border-gray-600 text-white rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
-            >
-              <option>Светлая</option>
-              <option selected>Темная</option>
-              <option>Авто</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <!-- Service Settings -->
-      <div class="bg-slate-800 border border-gray-700 rounded-xl">
-        <div class="px-6 py-4 border-b border-gray-700">
-          <h2 class="text-lg font-semibold text-white flex items-center space-x-2">
-            <ServerIcon class="w-5 h-5 text-gray-400" />
-            <span>Сервисы</span>
-          </h2>
-        </div>
-        <div class="p-6 space-y-6">
-          <div>
-            <label class="block text-sm font-medium text-gray-300 mb-2">Версия PHP</label>
-            <select
-              class="w-full px-3 py-2 text-sm bg-slate-600 border border-gray-600 text-white rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
-            >
-              <option selected>8.2.0</option>
-              <option>8.1.0</option>
-              <option>8.0.0</option>
-            </select>
-          </div>
-
-          <div>
-            <label class="block text-sm font-medium text-gray-300 mb-2">Версия Node.js</label>
-            <select
-              class="w-full px-3 py-2 text-sm bg-slate-600 border border-gray-600 text-white rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
-            >
-              <option selected>18.17.0</option>
-              <option>16.20.0</option>
-              <option>14.21.0</option>
-            </select>
-          </div>
-
-          <div>
-            <label class="block text-sm font-medium text-gray-300 mb-2">Веб-сервер</label>
-            <div class="space-y-2">
-              <div class="flex items-center space-x-3">
-                <input
-                  type="radio"
-                  name="webserver"
-                  value="nginx"
-                  class="w-4 h-4 text-cyan-600 bg-slate-600 border-gray-600 focus:ring-cyan-500"
-                  checked
-                />
-                <span class="text-sm text-gray-300">Nginx</span>
+    <div class="flex-1 overflow-y-auto custom-scrollbar p-6">
+      <div class="grid grid-cols-2 gap-4">
+        
+        <div class="bg-white/[0.02] border border-white/5 rounded-lg p-4 space-y-4">
+          <h2 class="text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-white/5 pb-2">General</h2>
+          
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs text-slate-300">Port Range</span>
+              <div class="flex items-center space-x-2 w-32">
+                <input type="number" value="80" class="w-full bg-black/40 border border-white/10 rounded px-2 py-1 text-xs text-cyan-400 outline-none" />
+                <input type="number" value="443" class="w-full bg-black/40 border border-white/10 rounded px-2 py-1 text-xs text-cyan-400 outline-none" />
               </div>
-              <div class="flex items-center space-x-3">
-                <input
-                  type="radio"
-                  name="webserver"
-                  value="apache"
-                  class="w-4 h-4 text-cyan-600 bg-slate-600 border-gray-600 focus:ring-cyan-500"
-                />
-                <span class="text-sm text-gray-300">Apache</span>
+            </div>
+
+            <label class="flex items-center justify-between cursor-pointer group">
+              <span class="text-xs text-slate-300 group-hover:text-white transition-colors">Autostart services</span>
+              <input type="checkbox" checked class="w-3 h-3 accent-cyan-500" />
+            </label>
+            
+            <div class="flex items-center justify-between">
+              <span class="text-xs text-slate-300">UI Theme</span>
+              <select class="bg-black/40 border border-white/10 rounded px-2 py-1 text-xs text-slate-300 outline-none">
+                <option>Dark</option>
+                <option>Light</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white/[0.02] border border-white/5 rounded-lg p-4 space-y-4">
+          <h2 class="text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-white/5 pb-2">Environment</h2>
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs text-slate-300">PHP</span>
+              <select class="w-24 bg-black/40 border border-white/10 rounded px-2 py-1 text-xs text-slate-300 outline-none font-mono">
+                <option>8.2.0</option>
+                <option>8.1.0</option>
+              </select>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-xs text-slate-300">Node.js</span>
+              <select class="w-24 bg-black/40 border border-white/10 rounded px-2 py-1 text-xs text-slate-300 outline-none font-mono">
+                <option>20.x</option>
+                <option>18.x</option>
+              </select>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-xs text-slate-300">Server</span>
+              <div class="flex bg-black/40 p-0.5 rounded border border-white/5">
+                <button class="px-2 py-1 text-[9px] font-bold uppercase bg-cyan-600 text-white rounded-[3px]">Nginx</button>
+                <button class="px-2 py-1 text-[9px] font-bold uppercase text-slate-500">Apache</button>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- SSL Settings -->
-      <div class="bg-slate-800 border border-gray-700 rounded-xl">
-        <div class="px-6 py-4 border-b border-gray-700">
-          <h2 class="text-lg font-semibold text-white flex items-center space-x-2">
-            <ShieldCheckIcon class="w-5 h-5 text-gray-400" />
-            <span>SSL сертификат</span>
-          </h2>
-        </div>
-        <div class="p-6 space-y-6">
-          <div>
-            <label class="block text-sm font-medium text-gray-300 mb-2">Домен</label>
-            <input
-              type="text"
-              value=".test"
-              class="w-full px-3 py-2 text-sm bg-slate-600 border border-gray-600 text-white rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
-            />
-          </div>
-
-          <div>
-            <label class="block text-sm font-medium text-gray-300 mb-2">Статус сертификата</label>
-            <div class="flex items-center space-x-3">
-              <div class="w-2 h-2 bg-green-400 rounded-full"></div>
-              <span class="text-sm text-green-400">Действителен до 2025-12-31</span>
+        <div class="col-span-2 bg-white/[0.02] border border-white/5 rounded-lg p-4 flex items-center justify-between">
+          <div class="flex items-center space-x-4">
+            <ShieldCheckIcon class="w-5 h-5 text-emerald-500" />
+            <div>
+              <p class="text-[10px] font-bold text-slate-500 uppercase">Domain & SSL</p>
+              <p class="text-xs text-slate-200 font-mono">Local dev: <span class="text-cyan-400">*.test</span></p>
             </div>
           </div>
-
-          <button
-            class="w-full px-4 py-2 text-sm bg-cyan-600 text-white hover:bg-cyan-700 rounded-lg transition-colors"
-          >
-            Перегенерировать сертификат
+          <button class="px-3 py-1 border border-white/10 hover:bg-white/5 rounded text-[10px] font-bold text-slate-400 uppercase transition-all">
+            Update Cert
           </button>
         </div>
-      </div>
 
-      <!-- Database Settings -->
-      <div class="bg-slate-800 border border-gray-700 rounded-xl">
-        <div class="px-6 py-4 border-b border-gray-700">
-          <h2 class="text-lg font-semibold text-white flex items-center space-x-2">
-            <CircleStackIcon class="w-5 h-5 text-gray-400" />
-            <span>База данных</span>
-          </h2>
-        </div>
-        <div class="p-6 space-y-6">
-          <div>
-            <label class="block text-sm font-medium text-gray-300 mb-2">Порт MySQL</label>
-            <input
-              type="number"
-              value="3306"
-              class="w-full px-3 py-2 text-sm bg-slate-600 border border-gray-600 text-white rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
-            />
-          </div>
-
-          <div>
-            <label class="block text-sm font-medium text-gray-300 mb-2">Порт PostgreSQL</label>
-            <input
-              type="number"
-              value="5432"
-              class="w-full px-3 py-2 text-sm bg-slate-600 border border-gray-600 text-white rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
-            />
-          </div>
-
-          <div>
-            <label class="block text-sm font-medium text-gray-300 mb-2">Порт Redis</label>
-            <input
-              type="number"
-              value="6379"
-              class="w-full px-3 py-2 text-sm bg-slate-600 border border-gray-600 text-white rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
-            />
+        <div class="col-span-2 bg-white/[0.02] border border-white/5 rounded-lg p-4 space-y-4">
+          <h2 class="text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-white/5 pb-2">Database Ports</h2>
+          <div class="grid grid-cols-3 gap-4">
+            <div class="space-y-1">
+              <span class="text-[9px] text-slate-500 uppercase block">MySQL</span>
+              <input type="number" value="3306" class="w-full bg-black/40 border border-white/10 rounded px-2 py-1 text-xs text-slate-300 outline-none focus:border-cyan-500/50" />
+            </div>
+            <div class="space-y-1">
+              <span class="text-[9px] text-slate-500 uppercase block">PostgreSQL</span>
+              <input type="number" value="5432" class="w-full bg-black/40 border border-white/10 rounded px-2 py-1 text-xs text-slate-300 outline-none focus:border-cyan-500/50" />
+            </div>
+            <div class="space-y-1">
+              <span class="text-[9px] text-slate-500 uppercase block">Redis</span>
+              <input type="number" value="6379" class="w-full bg-black/40 border border-white/10 rounded px-2 py-1 text-xs text-slate-300 outline-none focus:border-cyan-500/50" />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-
-    <!-- Save Button -->
-    <div class="flex justify-end">
-      <button
-        class="px-6 py-3 text-sm bg-cyan-600 text-white hover:bg-cyan-700 rounded-lg transition-colors font-medium"
-      >
-        Сохранить настройки
-      </button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { CogIcon, ServerIcon, ShieldCheckIcon, CircleStackIcon } from '@heroicons/vue/24/outline'
+import { CogIcon, ShieldCheckIcon } from '@heroicons/vue/24/outline'
 </script>
+
+<style scoped>
+/* Тонкий современный скроллбар */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(6, 182, 212, 0.3);
+}
+</style>

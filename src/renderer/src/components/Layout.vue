@@ -1,153 +1,62 @@
 <template>
-  <div class="h-screen bg-gray-900 flex flex-col">
-    <!-- Compact Header - LARAGON Style -->
-    <div class="bg-slate-800 border-b border-gray-700 flex items-center justify-between px-4 py-3">
-      <!-- Left Section - Logo & Status -->
-      <div class="flex items-center space-x-4">
-        <!-- Logo -->
-        <div class="flex items-center space-x-2">
-          <div class="w-8 h-8 bg-cyan-600 rounded-lg flex items-center justify-center">
-            <ServerIcon class="w-5 h-5 text-white" />
-          </div>
-          <span class="text-white font-semibold text-lg">Stack Forge</span>
+  <div class="h-screen bg-[#0d0f14] text-slate-300 flex flex-col overflow-hidden border border-white/5">
+    
+    <header class="h-12 flex items-center justify-between px-4 bg-white/[0.02] backdrop-blur-md select-none border-b border-white/5" style="-webkit-app-region: drag">
+      
+      <nav class="flex items-center space-x-1" style="-webkit-app-region: no-drag">
+        <router-link to="/" class="p-2 rounded-lg hover:bg-white/5 transition-colors group" title="Dashboard">
+          <Squares2X2Icon class="w-5 h-5 group-hover:text-cyan-400 transition-colors" />
+        </router-link>
+        <router-link to="/settings" class="p-2 rounded-lg hover:bg-white/5 transition-colors group" title="Settings">
+          <AdjustmentsHorizontalIcon class="w-5 h-5 group-hover:text-cyan-400 transition-colors" />
+        </router-link>
+        <div class="h-4 w-px bg-white/10 mx-2"></div>
+        <div class="flex items-center space-x-2 px-2 py-1 rounded-md bg-cyan-500/10 border border-cyan-500/20">
+          <div class="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></div>
+          <span class="text-[10px] font-bold text-cyan-500 uppercase tracking-tighter">System Ready</span>
         </div>
-      </div>
+      </nav>
 
-      <!-- Right Section - Quick Actions & Controls -->
+      <div class="flex items-center space-x-1" style="-webkit-app-region: no-drag">
+        <button @click="control('minimize')" class="w-8 h-8 flex items-center justify-center rounded-md hover:bg-white/5 transition-colors group">
+          <MinusIcon class="w-3.5 h-3.5 text-slate-500 group-hover:text-white" />
+        </button>
+        <button @click="control('maximize')" class="w-8 h-8 flex items-center justify-center rounded-md hover:bg-white/5 transition-colors group">
+          <ArrowsPointingOutIcon class="w-3 h-3 text-slate-500 group-hover:text-white" />
+        </button>
+        <button @click="control('close')" class="w-8 h-8 flex items-center justify-center rounded-md hover:bg-rose-500/20 group transition-colors">
+          <XMarkIcon class="w-3.5 h-3.5 text-slate-500 group-hover:text-rose-500" />
+        </button>
+      </div>
+    </header>
+
+    <main class="flex-1 overflow-hidden relative">
+      <router-view v-slot="{ Component }">
+        <transition name="fade" mode="out-in">
+          <component :is="Component" />
+        </transition>
+      </router-view>
+    </main>
+
+    <footer class="h-8 bg-black/40 border-t border-white/5 px-4 flex items-center justify-between text-[10px] font-medium tracking-wider uppercase opacity-60">
+      <div class="flex items-center space-x-4 italic">
+        <span>MEM: 1.2GB</span>
+        <span>CPU: 4%</span>
+      </div>
       <div class="flex items-center space-x-2">
-        <!-- Navigation -->
-        <nav class="flex items-center space-x-1 mr-4">
-          <router-link
-            to="/"
-            class="flex items-center space-x-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors"
-            :class="
-              $route.path === '/'
-                ? 'bg-cyan-600 text-white'
-                : 'text-gray-300 hover:bg-slate-600 hover:text-white'
-            "
-          >
-            <HomeIcon class="w-4 h-4" />
-            <span>Главная</span>
-          </router-link>
-          <router-link
-            to="/settings"
-            class="flex items-center space-x-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors"
-            :class="
-              $route.path === '/settings'
-                ? 'bg-cyan-600 text-white'
-                : 'text-gray-300 hover:bg-slate-600 hover:text-white'
-            "
-          >
-            <CogIcon class="w-4 h-4" />
-            <span>Настройки</span>
-          </router-link>
-        </nav>
-
-        <!-- Global Service Controls -->
-        <div class="flex items-center space-x-1 border-l border-gray-600 pl-4">
-          <button
-            @click="startAllServices"
-            class="p-2 text-green-400 hover:bg-green-400/20 rounded-md transition-colors"
-            title="Запустить все сервисы"
-            :disabled="allServicesRunning"
-          >
-            <PlayIcon class="w-4 h-4" />
-          </button>
-          <button
-            @click="stopAllServices"
-            class="p-2 text-red-400 hover:bg-red-400/20 rounded-md transition-colors"
-            title="Остановить все сервисы"
-            :disabled="!anyServiceRunning"
-          >
-            <StopIcon class="w-4 h-4" />
-          </button>
-        </div>
-
-        <!-- Window Controls -->
-        <div class="flex items-center space-x-1 border-l border-gray-600 pl-4">
-          <button
-            class="w-8 h-8 flex items-center justify-center hover:bg-slate-600 rounded-md transition-colors"
-            title="Свернуть"
-          >
-            <MinusIcon class="w-4 h-4 text-gray-400" />
-          </button>
-          <button
-            class="w-8 h-8 flex items-center justify-center hover:bg-slate-600 rounded-md transition-colors"
-            title="Развернуть"
-          >
-            <ArrowsPointingOutIcon class="w-4 h-4 text-gray-400" />
-          </button>
-          <button
-            class="w-8 h-8 flex items-center justify-center hover:bg-red-600 rounded-md transition-colors"
-            title="Закрыть"
-          >
-            <XMarkIcon class="w-4 h-4 text-gray-400" />
-          </button>
-        </div>
+        <span>Sokhumi, GEO</span>
+        <div class="w-1 h-1 rounded-full bg-slate-500"></div>
+        <span>2026</span>
       </div>
-    </div>
-
-    <!-- Main Content Area -->
-    <div class="flex-1 flex">
-      <!-- Main Content -->
-      <div class="flex-1 flex flex-col min-h-0">
-        <div class="flex-1 overflow-auto bg-gray-900">
-          <router-view />
-        </div>
-      </div>
-    </div>
+    </footer>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import {
-  HomeIcon,
-  CogIcon,
-  ServerIcon,
-  MinusIcon,
-  ArrowsPointingOutIcon,
-  XMarkIcon,
-  PlayIcon,
-  StopIcon
+import { 
+  Squares2X2Icon, AdjustmentsHorizontalIcon, 
+  MinusIcon, ArrowsPointingOutIcon, XMarkIcon 
 } from '@heroicons/vue/24/outline'
 
-// Простое состояние сервисов (только для глобальных операций)
-const services = ref({
-  php: { running: false, loading: false },
-  nodejs: { running: false, loading: false },
-  nginx: { running: false, loading: false },
-  mysql: { running: false, loading: false },
-  redis: { running: false, loading: false },
-  docker: { running: false, loading: false }
-})
-
-// Функции управления сервисами (используются только для глобальных операций)
-const startAllServices = async (): Promise<void> => {
-  const promises = Object.keys(services.value).map(async (serviceName) => {
-    const service = services.value[serviceName as keyof typeof services.value]
-    if (!service.running) {
-      service.loading = true
-      await new Promise((resolve) => setTimeout(resolve, 800))
-      service.running = true
-      service.loading = false
-    }
-  })
-
-  await Promise.all(promises)
-}
-
-const stopAllServices = async (): Promise<void> => {
-  const promises = Object.keys(services.value).map(async (serviceName) => {
-    const service = services.value[serviceName as keyof typeof services.value]
-    if (service.running) {
-      service.loading = true
-      await new Promise((resolve) => setTimeout(resolve, 800))
-      service.running = false
-      service.loading = false
-    }
-  })
-
-  await Promise.all(promises)
-}
+const control = (action: string) => window.electron?.send('window-control', action)
 </script>
